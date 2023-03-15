@@ -1,13 +1,4 @@
-import React, {useState} from 'react';
-// import MediaModal from './MediaModal';
-
 export default function MediaRow(props) {
-  // const [clicked, setClicked] = useState(false);
-
-  // const resetClicked = () => {
-  //   setClicked(false);
-  // };
-
   return (
     <tr>
       <td>
@@ -18,16 +9,14 @@ export default function MediaRow(props) {
         <p>{props.item.description}</p>
       </td>
       <td>
-        <button onClick={() => props.dialog({'img': props.item.filename, 'alt': props.item.title})}>View</button>
-        {/* <a href={props.item.filename}>View</a> */}
+        <button
+          onClick={() =>
+            props.dialog({img: props.item.filename, alt: props.item.title})
+          }
+        >
+          View
+        </button>
       </td>
-      {/* {clicked && (
-        <MediaModal
-          img={props.item.filename}
-          altText={props.item.title}
-          resetState={resetClicked}
-        />
-      )} */}
     </tr>
   );
 }
