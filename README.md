@@ -2,4 +2,4 @@
 
 ## Week 1 - First App
 
-Open [https://users.metropolia.fi/~veerakek/Mediapalvelut_ja_kayttajakokemus/React/week1-first-app/](https://users.metropolia.fi/~veerakek/Mediapalvelut_ja_kayttajakokemus/React/week1-first-app/) to view it in the browser
+Open [https://users.metropolia.fi/~veerakek/Mediapalvelut_ja_kayttajakokemus/React/week1-http-a/](https://users.metropolia.fi/~veerakek/Mediapalvelut_ja_kayttajakokemus/React/week1-http-a/) to view it in the browser
