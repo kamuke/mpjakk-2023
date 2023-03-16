@@ -1,6 +1,6 @@
 import {useState} from 'react';
-import MediaModal from './MediaModal';
-import MediaTable from './MediaTable';
+import MediaModal from './components/MediaModal';
+import MediaTable from './components/MediaTable';
 
 // Mockup data
 const mediaArray = [
@@ -9,31 +9,31 @@ const mediaArray = [
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sodales enim eget leo condimentum vulputate. Sed lacinia consectetur fermentum. Vestibulum lobortis purus id nisi mattis posuere. Praesent sagittis justo quis nibh ullamcorper, eget elementum lorem consectetur. Pellentesque eu consequat justo, eu sodales eros.',
     thumbnails: {
-      w160: 'http://placekitten.com/160/161',
+      w160: 'https://placekitten.com/160/161',
     },
-    filename: 'http://placekitten.com/2048/1920',
+    filename: 'https://placekitten.com/2048/1920',
   },
   {
     title: 'Title 2',
     description:
       'Donec dignissim tincidunt nisl, non scelerisque massa pharetra ut. Sed vel velit ante. Aenean quis viverra magna. Praesent eget cursus urna. Ut rhoncus interdum dolor non tincidunt. Sed vehicula consequat facilisis. Pellentesque pulvinar sem nisl, ac vestibulum erat rhoncus id. Vestibulum tincidunt sapien eu ipsum tincidunt pulvinar. ',
     thumbnails: {
-      w160: 'http://placekitten.com/160/162',
+      w160: 'https://placekitten.com/160/162',
     },
-    filename: 'http://placekitten.com/2041/1922',
+    filename: 'https://placekitten.com/2041/1922',
   },
   {
     title: 'Title 3',
     description:
       'Phasellus imperdiet nunc tincidunt molestie vestibulum. Donec dictum suscipit nibh. Sed vel velit ante. Aenean quis viverra magna. Praesent eget cursus urna. Ut rhoncus interdum dolor non tincidunt. Sed vehicula consequat facilisis. Pellentesque pulvinar sem nisl, ac vestibulum erat rhoncus id. ',
     thumbnails: {
-      w160: 'http://placekitten.com/160/163',
+      w160: 'https://placekitten.com/160/163',
     },
-    filename: 'http://placekitten.com/2039/1920',
+    filename: 'https://placekitten.com/2039/1920',
   },
 ];
 
-function App() {
+const App = () => {
   const [dialog, setDialog] = useState(false);
 
   const resetDialog = () => {
@@ -42,7 +42,7 @@ function App() {
 
   return (
     <div>
-      <MediaTable media={mediaArray} dialog={setDialog} />
+      <MediaTable mediaArray={mediaArray} dialog={setDialog} />
       {dialog && (
         <MediaModal
           img={dialog.img}
@@ -52,6 +52,6 @@ function App() {
       )}
     </div>
   );
-}
+};
 
 export default App;
