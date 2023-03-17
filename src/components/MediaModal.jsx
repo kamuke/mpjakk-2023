@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {mediaUrl} from '../utils/variables';
 
 const MediaModal = ({img, alt, resetDialog}) => {
   return (
     <dialog open>
-      <img src={img} alt={alt} />
+      <img src={mediaUrl + img} alt={alt} />
       <form method="dialog">
         <button onClick={() => resetDialog()}>Close</button>
       </form>
