@@ -30,13 +30,10 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
 }
 
 main {
-  max-width: 1280px;
+  max-width: 56rem;
   margin: 0 auto;
   padding: 2rem;
 }
@@ -81,7 +78,7 @@ td h2 {
 }
 
 dialog {
-  width: 34rem;
+  width: 40rem;
   top: 2rem;
   border-radius: 2rem;
   border: 0;
@@ -100,9 +97,13 @@ dialog img {
 
 @media (prefers-color-scheme: light) {
   :root {
+    color: var(--dark);
     background-color: var(--light);
   }
   button {
+    background-color: var(--light);
+  }
+  dialog {
     background-color: var(--light);
   }
 }

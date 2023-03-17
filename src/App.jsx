@@ -1,6 +1,6 @@
 import {useState} from 'react';
-import MediaModal from './MediaModal';
-import MediaTable from './MediaTable';
+import MediaModal from './components/MediaModal';
+import MediaTable from './components/MediaTable';
 
 function App() {
   const [dialog, setDialog] = useState(false);
