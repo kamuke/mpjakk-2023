@@ -29,7 +29,6 @@ module.exports = {
     'react/jsx-filename-extension': [1, {extensions: ['.js', '.jsx']}],
     'require-jsdoc': 0,
     'prettier/prettier': 'error', // remove if using WebStorm
-    'react/prop-types': 0,
   },
   settings: {
     react: {
