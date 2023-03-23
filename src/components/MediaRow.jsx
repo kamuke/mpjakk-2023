@@ -8,7 +8,7 @@ const MediaRow = ({item, dialog}) => {
         <img src={mediaUrl + item.thumbnails.w160} alt={item.title} />
       </td>
       <td>
-        <h2>{item.title}</h2>
+        <h3>{item.title}</h3>
         <p>{item.description}</p>
       </td>
       <td>
