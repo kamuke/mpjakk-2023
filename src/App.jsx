@@ -1,26 +1,22 @@
-import {useState} from 'react';
-import MediaModal from './components/MediaModal';
-import MediaTable from './components/MediaTable';
+// import Home from './views/Home';
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import Layout from './views/Layout';
+import Home from './views/Home';
+import Single from './views/Single';
+import Profile from './views/Profile';
 
-function App() {
-  const [dialog, setDialog] = useState(false);
-
-  const resetDialog = () => {
-    setDialog(false);
-  };
-
+const App = () => {
   return (
-    <div>
-      <MediaTable dialog={setDialog} />
-      {dialog && (
-        <MediaModal
-          img={dialog.img}
-          alt={dialog.alt}
-          resetDialog={resetDialog}
-        />
-      )}
-    </div>
+    <Router>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/single" element={<Single />} />
+          <Route path="/profile" element={<Profile />} />
+        </Route>
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
