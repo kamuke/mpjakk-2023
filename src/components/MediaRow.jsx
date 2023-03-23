@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import {mediaUrl} from '../utils/variables';
+import {Link} from 'react-router-dom';
 
-const MediaRow = ({item, dialog}) => {
+const MediaRow = ({item}) => {
   return (
     <tr>
       <td>
@@ -12,9 +13,9 @@ const MediaRow = ({item, dialog}) => {
         <p>{item.description}</p>
       </td>
       <td>
-        <button onClick={() => dialog({img: item.filename, alt: item.title})}>
+        <Link to="/single" state={{item: item}}>
           View
-        </button>
+        </Link>
       </td>
     </tr>
   );
@@ -22,7 +23,6 @@ const MediaRow = ({item, dialog}) => {
 
 MediaRow.propTypes = {
   item: PropTypes.object.isRequired,
-  dialog: PropTypes.func.isRequired,
 };
 
 export default MediaRow;

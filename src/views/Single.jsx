@@ -1,16 +1,16 @@
+import {useLocation} from 'react-router-dom';
 import {mediaUrl} from '../utils/variables';
 
 const Single = () => {
-  const file = {}; // TODO in the next task: single media from props.location.state
+  const {state} = useLocation();
+  const {item} = state;
 
   return (
     <>
-      <h1>{file.title}</h1>
-      <img src={mediaUrl + file.filename} alt={file.title} />
+      <h1>{item.title}</h1>
+      <img src={mediaUrl + item.filename} alt={item.title} />
     </>
   );
 };
-
-// TODO in the next task: add propType for location
 
 export default Single;

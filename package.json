@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build --base=./",
+    "build": "vite build --base=/~veerakek/Mediapalvelut_ja_kayttajakokemus/React/week2-navigation/",
     "preview": "vite preview"
   },
   "dependencies": {
