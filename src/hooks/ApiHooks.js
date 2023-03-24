@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-import {baseUrl} from '../utils/variables';
+import {baseUrl, userUrl} from '../utils/variables';
 
 const doFetch = async (url, options) => {
   const response = await fetch(url, options);
@@ -40,4 +40,51 @@ const useMedia = () => {
   return {mediaArray};
 };
 
-export {useMedia};
+const useUser = () => {
+  const postUser = async (inputs) => {
+    const fetchOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(inputs),
+    };
+
+    return await doFetch(userUrl, fetchOptions);
+  };
+
+  const getUserByToken = async (token) => {
+    const fetchOptions = {
+      method: 'GET',
+      headers: {
+        'x-access-token': token,
+      },
+    };
+
+    return await doFetch(userUrl + '/user', fetchOptions);
+  };
+
+  const getCheckUsername = async (username) => {
+    return await doFetch(userUrl + '/username/' + username);
+  };
+
+  return {postUser, getUserByToken, getCheckUsername};
+};
+
+const useAuth = () => {
+  const postLogin = async (inputs) => {
+    const fetchOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(inputs),
+    };
+
+    return await doFetch(baseUrl + 'login', fetchOptions);
+  };
+
+  return {postLogin};
+};
+
+export {useMedia, useUser, useAuth};

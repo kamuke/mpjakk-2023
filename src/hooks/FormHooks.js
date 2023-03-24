@@ -4,7 +4,7 @@ const useForm = (callback, initState) => {
   const [inputs, setInputs] = useState(initState);
 
   const handleSubmit = (event) => {
-    // If event then
+    // If true then
     event && event.preventDefault();
     callback();
   };
