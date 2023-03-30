@@ -4,6 +4,7 @@ import {useAuth} from '../hooks/ApiHooks';
 import {useNavigate} from 'react-router-dom';
 import {useContext} from 'react';
 import {MediaContext} from '../contexts/MediaContext';
+import {Form, Input, Button} from 'semantic-ui-react';
 
 const LoginForm = (props) => {
   const {setUser} = useContext(MediaContext);
@@ -33,22 +34,30 @@ const LoginForm = (props) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <input
-          name="username"
-          placeholder="Username"
-          onChange={handleInputChange}
-          value={inputs.username}
-        />
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          onChange={handleInputChange}
-          value={inputs.password}
-        />
-        <button type="submit">Login</button>
-      </form>
+      <Form onSubmit={handleSubmit}>
+        <Form.Field>
+          <label htmlFor="username">Username</label>
+          <Input
+            name="username"
+            placeholder="Username"
+            onChange={handleInputChange}
+            value={inputs.username}
+          />
+        </Form.Field>
+        <Form.Field>
+          <label htmlFor="password">Password</label>
+          <Input
+            name="password"
+            type="password"
+            placeholder="Password"
+            onChange={handleInputChange}
+            value={inputs.password}
+          />
+        </Form.Field>
+        <Button primary fluid type="submit">
+          Login
+        </Button>
+      </Form>
     </>
   );
 };

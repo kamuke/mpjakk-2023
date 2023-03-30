@@ -1,3 +1,4 @@
+import 'semantic-ui-css/semantic.min.css';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import Layout from './views/Layout';
 import Login from './views/Login';
