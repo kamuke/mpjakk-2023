@@ -6,8 +6,7 @@ import {useContext} from 'react';
 import {MediaContext} from '../contexts/MediaContext';
 
 const LoginForm = (props) => {
-  // eslint-disable-next-line no-unused-vars
-  const [user, setUser] = useContext(MediaContext);
+  const {setUser} = useContext(MediaContext);
   const {postLogin} = useAuth();
   const navigate = useNavigate();
 

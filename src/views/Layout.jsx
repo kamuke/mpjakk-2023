@@ -5,8 +5,7 @@ import {useEffect, useContext} from 'react';
 import {MediaContext} from '../contexts/MediaContext';
 
 const Layout = () => {
-  // eslint-disable-next-line no-unused-vars
-  const [user, setUser] = useContext(MediaContext);
+  const {user, setUser} = useContext(MediaContext);
   const {getUserByToken} = useUser();
   const navigate = useNavigate();
   const location = useLocation();
@@ -17,6 +16,7 @@ const Layout = () => {
       const user = await getUserByToken(token);
 
       if (user) {
+        setUser(user);
         const target = location.pathname === '/' ? '/home' : location.pathname;
         navigate(target);
         return;
@@ -33,19 +33,25 @@ const Layout = () => {
   return (
     <div>
       <nav>
-        {user && (
-          <ul>
+        <ul>
+          <li>
+            <Link to="/home">Home</Link>
+          </li>
+          {user ? (
+            <>
+              <li>
+                <Link to="/profile">Profile</Link>
+              </li>
+              <li>
+                <Link to="/logout">Logout</Link>
+              </li>
+            </>
+          ) : (
             <li>
-              <Link to="/home">Home</Link>
+              <Link to="/">Login</Link>
             </li>
-            <li>
-              <Link to="/profile">Profile</Link>
-            </li>
-            <li>
-              <Link to="/logout">Log out</Link>
-            </li>
-          </ul>
-        )}
+          )}
+        </ul>
       </nav>
       <main>
         <Outlet />
