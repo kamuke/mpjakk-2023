@@ -1,10 +1,8 @@
-// import PropTypes from 'prop-types';
+import {useContext, useEffect} from 'react';
 import {Navigate} from 'react-router-dom';
-import {useContext} from 'react';
 import {MediaContext} from '../contexts/MediaContext';
-import {useEffect} from 'react';
 
-const Logout = (props) => {
+const Logout = () => {
   const {setUser} = useContext(MediaContext);
 
   useEffect(() => {
@@ -14,7 +12,5 @@ const Logout = (props) => {
 
   return <Navigate to="/" />;
 };
-
-// Logout.propTypes = {};
 
 export default Logout;

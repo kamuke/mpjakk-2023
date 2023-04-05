@@ -1,31 +1,37 @@
-// import {useState} from 'react';
+import {
+  AppBar,
+  Container,
+  createTheme,
+  ThemeProvider,
+  Toolbar,
+  Box,
+  Button,
+  CssBaseline,
+  Typography,
+} from '@mui/material';
+import {useContext, useEffect} from 'react';
 import {Link, Outlet, useLocation, useNavigate} from 'react-router-dom';
-import {useUser} from '../hooks/ApiHooks';
-import {useEffect, useContext} from 'react';
 import {MediaContext} from '../contexts/MediaContext';
-import {Menu, Container, Button, Icon} from 'semantic-ui-react';
-import {useWindowSize} from '../hooks/WindowHooks';
+import {useUser} from '../hooks/ApiHooks';
+import {themeOptions} from '../theme/themeOptions';
 
 const Layout = () => {
   const {user, setUser} = useContext(MediaContext);
   const {getUserByToken} = useUser();
   const navigate = useNavigate();
   const location = useLocation();
-  const windowSize = useWindowSize();
 
   const getUserInfo = async () => {
-    const token = localStorage.getItem('userToken');
-    if (token) {
-      const user = await getUserByToken(token);
-
-      if (user) {
-        setUser(user);
+    const userToken = localStorage.getItem('userToken');
+    if (userToken) {
+      const userData = await getUserByToken(userToken);
+      if (userData) {
+        setUser(userData);
         const target = location.pathname === '/' ? '/home' : location.pathname;
         navigate(target);
         return;
       }
     }
-
     navigate('/');
   };
 
@@ -33,80 +39,51 @@ const Layout = () => {
     getUserInfo();
   }, []);
 
+  const theme = createTheme(themeOptions);
+
   return (
-    <>
-      {windowSize.width > 767 ? (
-        <Menu as="nav" style={{paddingLeft: 0}} fixed="top" inverted fluid>
-          <Container>
-            <Menu.Item as={Link} to="/home">
-              <Icon name="home" />
-              Home
-            </Menu.Item>
-            {user ? (
-              <>
-                <Menu.Item as={Link} to="/profile">
-                  <Icon name="user" />
-                  Profile
-                </Menu.Item>
-                <Menu.Item position="right">
-                  <Button as={Link} to="/logout" inverted>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <AppBar as="nav" position="sticky">
+        <Container maxWidth="xl">
+          <Toolbar disableGutters sx={{justifyContent: 'space-between'}}>
+            <Typography
+              variant="h6"
+              sx={{
+                m: 2,
+                letterSpacing: '.3rem',
+              }}
+            >
+              LOGO
+            </Typography>
+            <Box sx={{mr: 2}}>
+              <Button sx={{color: 'white'}} component={Link} to="/home">
+                Home
+              </Button>
+              {user ? (
+                <>
+                  <Button sx={{color: 'white'}} component={Link} to="/profile">
+                    Profile
+                  </Button>
+                  <Button sx={{color: 'white'}} component={Link} to="/logout">
                     Logout
                   </Button>
-                </Menu.Item>
-              </>
-            ) : (
-              <Menu.Item position="right">
-                <Button as={Link} to="/" inverted>
+                </>
+              ) : (
+                <Button sx={{color: 'white'}} component={Link} to="/">
                   Login
                 </Button>
-              </Menu.Item>
-            )}
-          </Container>
-        </Menu>
-      ) : (
-        <Menu
-          as="nav"
-          icon="labeled"
-          fixed="bottom"
-          size="mini"
-          inverted
-          fluid
-          widths={user ? 3 : 2}
-        >
-          <Menu.Item as={Link} to="/home">
-            <Icon name="home" />
-            Home
-          </Menu.Item>
-          {user ? (
-            <>
-              <Menu.Item as={Link} to="/profile">
-                <Icon name="user" />
-                Profile
-              </Menu.Item>
-              <Menu.Item as={Link} to="/logout">
-                <Icon name="log out" />
-                Logout
-              </Menu.Item>
-            </>
-          ) : (
-            <Menu.Item as={Link} to="/">
-              <Icon name="sign in" />
-              Login
-            </Menu.Item>
-          )}
-        </Menu>
-      )}
-      <Container
-        as="main"
-        style={
-          windowSize.width > 767
-            ? {margin: '6rem 0'}
-            : {margin: '1.5rem 0 5rem 0'}
-        }
-      >
-        <Outlet />
-      </Container>
-    </>
+              )}
+            </Box>
+          </Toolbar>
+        </Container>
+      </AppBar>
+      <main>
+        <Container maxWidth="xl" sx={{mt: 4}}>
+          <Outlet />
+        </Container>
+      </main>
+    </ThemeProvider>
   );
 };
 

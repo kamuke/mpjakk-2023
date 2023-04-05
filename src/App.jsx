@@ -1,12 +1,12 @@
-import 'semantic-ui-css/semantic.min.css';
+import './App.css';
+import Home from './views/Home';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import Layout from './views/Layout';
-import Login from './views/Login';
-import Home from './views/Home';
 import Single from './views/Single';
 import Profile from './views/Profile';
-import Logout from './views/Logout';
+import Login from './views/Login';
 import {MediaProvider} from './contexts/MediaContext';
+import Logout from './views/Logout';
 
 const App = () => {
   return (

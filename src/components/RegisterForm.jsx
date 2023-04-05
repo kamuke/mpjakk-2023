@@ -1,32 +1,31 @@
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import useForm from '../hooks/FormHooks';
 import {useUser} from '../hooks/ApiHooks';
-import {Form, Input, Button} from 'semantic-ui-react';
+import {Button} from '@mui/material';
+import {Container} from '@mui/system';
+import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+import {registerForm} from '../utils/errorMessages';
+import {registerValidators} from '../utils/validators';
+import {useEffect} from 'react';
 
-const RegisterForm = (props) => {
-  const {postUser, getCheckUsername} = useUser();
+const RegisterForm = ({toggle}) => {
+  const {postUser, getCheckUser} = useUser();
 
   const initValues = {
     username: '',
     password: '',
+    confirm: '',
     email: '',
     full_name: '',
   };
 
   const doRegister = async () => {
     try {
-      const registerResult = await postUser(inputs);
-      alert(registerResult.message);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
-  const handleUsername = async () => {
-    try {
-      const {available} = await getCheckUsername(inputs.username);
-      // True or
-      available || alert('Username already in use.');
+      const withoutConfirm = {...inputs};
+      delete withoutConfirm.confirm;
+      const userResult = await postUser(withoutConfirm);
+      alert(userResult.message);
+      toggle();
     } catch (error) {
       alert(error.message);
     }
@@ -37,56 +36,82 @@ const RegisterForm = (props) => {
     initValues
   );
 
+  useEffect(() => {
+    ValidatorForm.addValidationRule(
+      'isPasswordMatch',
+      (value) => value === inputs.password
+    );
+    ValidatorForm.addValidationRule('isUsernameAvailable', async (value) => {
+      return await getCheckUser(inputs.username);
+    });
+  }, [inputs]);
+
   return (
-    <>
-      <Form onSubmit={handleSubmit}>
-        <Form.Field>
-          <label htmlFor="username">Username</label>
-          <Input
-            name="username"
-            placeholder="Username"
-            onChange={handleInputChange}
-            onBlur={handleUsername}
-            value={inputs.username}
-          />
-        </Form.Field>
-        <Form.Field>
-          <label htmlFor="password">Password</label>
-          <Input
-            name="password"
-            type="password"
-            placeholder="Password"
-            onChange={handleInputChange}
-            value={inputs.password}
-          />
-        </Form.Field>
-        <Form.Field>
-          <label htmlFor="email">Email</label>
-          <Input
-            name="email"
-            type="email"
-            placeholder="MattiMeikalainen@mail.com"
-            onChange={handleInputChange}
-            value={inputs.email}
-          />
-        </Form.Field>
-        <Form.Field>
-          <label htmlFor="full_name">Full name</label>
-          <Input
-            name="full_name"
-            placeholder="Matti Meikalainen"
-            onChange={handleInputChange}
-            value={inputs.full_name}
-          />
-        </Form.Field>
-        <Button primary fluid type="submit">
+    <Container maxWidth="xs">
+      <ValidatorForm onSubmit={handleSubmit} noValidate>
+        <TextValidator
+          fullWidth
+          margin="dense"
+          name="username"
+          label="Username"
+          value={inputs.username}
+          onChange={handleInputChange}
+          validators={registerValidators.username}
+          errorMessages={registerForm.username}
+        />
+        <TextValidator
+          fullWidth
+          margin="dense"
+          name="password"
+          type="password"
+          label="Password"
+          onChange={handleInputChange}
+          value={inputs.password}
+          validators={registerValidators.password}
+          errorMessages={registerForm.password}
+        />
+        <TextValidator
+          fullWidth
+          margin="dense"
+          name="confirm"
+          type="password"
+          label="Confirm password"
+          onChange={handleInputChange}
+          value={inputs.confirm}
+          validators={registerValidators.confirm}
+          errorMessages={registerForm.confirm}
+        />
+        <TextValidator
+          fullWidth
+          margin="dense"
+          name="email"
+          type="email"
+          label="Email"
+          onChange={handleInputChange}
+          value={inputs.email}
+          validators={registerValidators.email}
+          errorMessages={registerForm.email}
+        />
+        <TextValidator
+          fullWidth
+          margin="dense"
+          name="full_name"
+          label="Full name"
+          onChange={handleInputChange}
+          value={inputs.full_name}
+          validators={registerValidators.full_name}
+          errorMessages={registerForm.full_name}
+        />
+        <Button fullWidth sx={{mt: 1}} variant="contained" type="submit">
           Register
         </Button>
-      </Form>
-    </>
+      </ValidatorForm>
+    </Container>
   );
 };
 
-// RegisterForm.propTypes = {};
+RegisterForm.propTypes = {
+  toggle: PropTypes.func,
+};
 
 export default RegisterForm;

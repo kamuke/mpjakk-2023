@@ -1,10 +1,12 @@
+import {Typography} from '@mui/material';
 import MediaTable from '../components/MediaTable';
-import {Header} from 'semantic-ui-react';
 
 const Home = () => {
   return (
     <>
-      <Header as="h1">Home</Header>
+      <Typography component="h1" variant="h4">
+        Home
+      </Typography>
       <MediaTable />
     </>
   );

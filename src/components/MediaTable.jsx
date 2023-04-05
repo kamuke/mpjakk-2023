@@ -1,23 +1,22 @@
-import MediaRow from './MediaRow';
+import {ImageList} from '@mui/material';
+// import PropTypes from 'prop-types';
 import {useMedia} from '../hooks/ApiHooks';
-import {Grid} from 'semantic-ui-react';
 import {useWindowSize} from '../hooks/WindowHooks';
+import MediaRow from './MediaRow';
 
 const MediaTable = () => {
   const {mediaArray} = useMedia();
   const windowSize = useWindowSize();
 
   return (
-    <Grid
-      columns={windowSize.width > 767 ? 4 : 3}
-      className={windowSize.width > 767 ? 'container' : ''}
-      style={{marginTop: '1rem'}}
-    >
-      {mediaArray.map((item, i) => (
-        <MediaRow key={i} item={item} />
-      ))}
-    </Grid>
+    <ImageList cols={windowSize.width > 768 ? 3 : 2} gap={8}>
+      {mediaArray.map((item, index) => {
+        return <MediaRow key={index} file={item} />;
+      })}
+    </ImageList>
   );
 };
+
+// MediaTable.propTypes = {};
 
 export default MediaTable;

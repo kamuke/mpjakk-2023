@@ -1,33 +1,32 @@
+import {Button, Grid, Typography} from '@mui/material';
 // import PropTypes from 'prop-types';
-import LoginForm from './../components/LoginForm';
-import RegisterForm from './../components/RegisterForm';
 import {useState} from 'react';
-import {Grid, Message, Segment, Button, Header} from 'semantic-ui-react';
+import LoginForm from '../components/LoginForm';
+import RegisterForm from '../components/RegisterForm';
 
-const Login = () => {
+const Login = (props) => {
   const [formToggle, setFormToggle] = useState(true);
-
-  const changeformToggle = () => {
+  const toggle = () => {
     setFormToggle(!formToggle);
   };
-
   return (
-    <Grid>
-      <Grid.Column style={{maxWidth: 448, margin: 'auto'}}>
-        <Header as="h2" textAlign="center" color="blue">
+    <Grid container direction="column" alignItems="center">
+      <Grid item>
+        <Typography component="h1" variant="h4">
           {formToggle ? 'Login with your username' : 'Please create an account'}
-        </Header>
-        <Segment>{formToggle ? <LoginForm /> : <RegisterForm />}</Segment>
-        <Message style={{textAlign: 'center'}}>
-          <p>{formToggle ? 'First time here?' : 'Already have an account?'}</p>
-          <Button
-            basic
-            color="blue"
-            content={formToggle ? 'Register' : 'Login'}
-            onClick={changeformToggle}
-          />
-        </Message>
-      </Grid.Column>
+        </Typography>
+      </Grid>
+      <Grid item>
+        {formToggle ? <LoginForm /> : <RegisterForm toggle={toggle} />}
+      </Grid>
+      <Grid item>
+        <Typography variant="body2" sx={{mt: 2}}>
+          {formToggle ? 'First time here?' : 'Already have an account?'}
+        </Typography>
+      </Grid>
+      <Grid item>
+        <Button onClick={toggle}>{formToggle ? 'Register' : 'Login'}</Button>
+      </Grid>
     </Grid>
   );
 };

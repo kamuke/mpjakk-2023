@@ -1,19 +1,25 @@
 {
-  "name": "react",
+  "name": "my-app",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build --base=/~veerakek/Mediapalvelut_ja_kayttajakokemus/React/week3-semantic-ui/",
+    "build": "vite build --base=/~ilkkamtk/mpjakk23/forms/",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@fontsource/lato": "^4.5.10",
+    "@fontsource/playfair-display": "^4.5.13",
+    "@fontsource/pt-serif": "^4.5.11",
+    "@mui/icons-material": "^5.11.11",
+    "@mui/material": "^5.11.15",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.9.0",
-    "semantic-ui-css": "^2.5.0",
-    "semantic-ui-react": "^2.1.4"
+    "react-material-ui-form-validator": "^3.0.1",
+    "react-router-dom": "^6.9.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.27",

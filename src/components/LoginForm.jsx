@@ -1,14 +1,14 @@
+import {Box, Button, Container, TextField} from '@mui/material';
 // import PropTypes from 'prop-types';
-import useForm from '../hooks/FormHooks';
-import {useAuth} from '../hooks/ApiHooks';
-import {useNavigate} from 'react-router-dom';
 import {useContext} from 'react';
+import {useNavigate} from 'react-router-dom';
 import {MediaContext} from '../contexts/MediaContext';
-import {Form, Input, Button} from 'semantic-ui-react';
+import {useAuthentication} from '../hooks/ApiHooks';
+import useForm from '../hooks/FormHooks';
 
 const LoginForm = (props) => {
   const {setUser} = useContext(MediaContext);
-  const {postLogin} = useAuth();
+  const {postLogin} = useAuthentication();
   const navigate = useNavigate();
 
   const initValues = {
@@ -33,32 +33,32 @@ const LoginForm = (props) => {
   );
 
   return (
-    <>
-      <Form onSubmit={handleSubmit}>
-        <Form.Field>
-          <label htmlFor="username">Username</label>
-          <Input
-            name="username"
-            placeholder="Username"
-            onChange={handleInputChange}
-            value={inputs.username}
-          />
-        </Form.Field>
-        <Form.Field>
-          <label htmlFor="password">Password</label>
-          <Input
-            name="password"
-            type="password"
-            placeholder="Password"
-            onChange={handleInputChange}
-            value={inputs.password}
-          />
-        </Form.Field>
-        <Button primary fluid type="submit">
+    <Container maxWidth="xs">
+      <Box component="form" onSubmit={handleSubmit}>
+        <TextField
+          fullWidth
+          margin="dense"
+          name="username"
+          label="Username"
+          onChange={handleInputChange}
+          value={inputs.username}
+          sx={{mt: 2}}
+        />
+        <TextField
+          fullWidth
+          margin="dense"
+          name="password"
+          type="password"
+          label="Password"
+          onChange={handleInputChange}
+          value={inputs.password}
+          sx={{mt: 2}}
+        />
+        <Button fullWidth sx={{mt: 2}} variant="contained" type="submit">
           Login
         </Button>
-      </Form>
-    </>
+      </Box>
+    </Container>
   );
 };
 

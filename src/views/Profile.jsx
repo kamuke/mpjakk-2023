@@ -1,10 +1,18 @@
-// import {useUser} from '../hooks/ApiHooks';
-// import {useEffect} from 'react';
+import {AccountCircle, Badge, ContactMail} from '@mui/icons-material';
+import {
+  Avatar,
+  Card,
+  CardContent,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemIcon,
+  ListItemText,
+} from '@mui/material';
 import {useContext, useEffect, useState} from 'react';
 import {MediaContext} from '../contexts/MediaContext';
-import {mediaUrl} from '../utils/variables';
 import {useTag} from '../hooks/ApiHooks';
-import {Image, Header, List} from 'semantic-ui-react';
+import {mediaUrl} from '../utils/variables';
 
 const Profile = () => {
   const {user} = useContext(MediaContext);
@@ -30,30 +38,51 @@ const Profile = () => {
     fetchAvatar();
   }, [user]);
 
-  console.log(avatar.filename);
-
   return (
-    <>
+    <Card>
       {user && (
-        <>
-          <Image src={avatar.filename} size="small" circular />
-          <Header as="h1">
-            {user.full_name}
-            <Header.Subheader>@{user.username}</Header.Subheader>
-          </Header>
+        <CardContent>
           <List>
-            <List.Item>
-              <List.Icon name="mail" />
-              <List.Content>{user.email}</List.Content>
-            </List.Item>
-            <List.Item>
-              <List.Icon name="id badge outline" />
-              <List.Content>{user.user_id}</List.Content>
-            </List.Item>
+            <ListItem>
+              <ListItemAvatar sx={{width: '100%'}}>
+                <Avatar
+                  variant="square"
+                  src={avatar.filename}
+                  imgProps={{
+                    alt: `${user.username}'s profile image`,
+                  }}
+                  sx={{width: '100%', height: '30vh'}}
+                />
+              </ListItemAvatar>
+            </ListItem>
+            <ListItem>
+              <ListItemIcon>
+                <AccountCircle />
+              </ListItemIcon>
+              <ListItemText primary={user.username} />
+            </ListItem>
+            <ListItem>
+              <ListItemIcon>
+                <ContactMail />
+              </ListItemIcon>
+              <ListItemText primary={user.email} />
+            </ListItem>
+            <ListItem>
+              <ListItemIcon>
+                <Badge />
+              </ListItemIcon>
+              <ListItemText primary={user.full_name} />
+            </ListItem>
+            <ListItem>
+              <ListItemIcon>
+                <Badge />
+              </ListItemIcon>
+              <ListItemText primary={user.user_id} />
+            </ListItem>
           </List>
-        </>
+        </CardContent>
       )}
-    </>
+    </Card>
   );
 };
 

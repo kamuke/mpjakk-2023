@@ -1,27 +1,32 @@
+import {Button, ImageListItem, ImageListItemBar} from '@mui/material';
 import PropTypes from 'prop-types';
-import {mediaUrl} from '../utils/variables';
 import {Link} from 'react-router-dom';
-import {Grid, Image} from 'semantic-ui-react';
+import {mediaUrl} from '../utils/variables';
 
-const MediaRow = ({item}) => {
+const MediaRow = ({file}) => {
   return (
-    <Grid.Column>
-      <Image
-        className="thumbnail"
-        style={{height: '100%', padding: 0}}
-        as={Link}
-        to="/single"
-        state={{item: item}}
-        src={mediaUrl + item.thumbnails.w160}
-        alt={item.title}
-        fluid
+    <ImageListItem>
+      <img src={mediaUrl + file.thumbnails.w640} alt={file.title} />
+      <ImageListItemBar
+        title={file.title}
+        subtitle={file.description}
+        actionIcon={
+          <Button
+            component={Link}
+            variant="contained"
+            to="/single"
+            state={{file}}
+          >
+            View
+          </Button>
+        }
       />
-    </Grid.Column>
+    </ImageListItem>
   );
 };
 
 MediaRow.propTypes = {
-  item: PropTypes.object.isRequired,
+  file: PropTypes.object.isRequired,
 };
 
 export default MediaRow;

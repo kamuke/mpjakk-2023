@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-import {baseUrl, userUrl} from '../utils/variables';
+import {baseUrl} from '../utils/variables';
 
 const doFetch = async (url, options) => {
   const response = await fetch(url, options);
@@ -42,55 +42,51 @@ const useMedia = () => {
 
 const useUser = () => {
   const postUser = async (inputs) => {
-    const fetchOptions = {
+    const options = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(inputs),
     };
-
-    return await doFetch(userUrl, fetchOptions);
+    return await doFetch(baseUrl + 'users', options);
   };
 
   const getUserByToken = async (token) => {
-    const fetchOptions = {
+    const options = {
       method: 'GET',
       headers: {
         'x-access-token': token,
       },
     };
-
-    return await doFetch(userUrl + '/user', fetchOptions);
+    return await doFetch(baseUrl + 'users/user', options);
   };
 
-  const getCheckUsername = async (username) => {
-    return await doFetch(userUrl + '/username/' + username);
+  const getCheckUser = async (username) => {
+    const {available} = await doFetch(baseUrl + 'users/username/' + username);
+    return available;
   };
 
-  return {postUser, getUserByToken, getCheckUsername};
+  return {postUser, getUserByToken, getCheckUser};
 };
 
-const useAuth = () => {
+const useAuthentication = () => {
   const postLogin = async (inputs) => {
-    const fetchOptions = {
+    const options = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(inputs),
     };
-
-    return await doFetch(baseUrl + 'login', fetchOptions);
+    return await doFetch(baseUrl + 'login', options);
   };
-
   return {postLogin};
 };
 
 const useTag = () => {
   const getTag = async (tag) => {
     const tagResult = await doFetch(baseUrl + 'tags/' + tag);
-
     if (tagResult.length > 0) {
       return tagResult;
     } else {
@@ -107,11 +103,10 @@ const useTag = () => {
       },
       body: JSON.stringify(data),
     };
-
     return await doFetch(baseUrl + 'tags', fetchOptions);
   };
 
   return {getTag, postTag};
 };
 
-export {useMedia, useUser, useAuth, useTag};
+export {useMedia, useUser, useAuthentication, useTag};
