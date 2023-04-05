@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build --base=/~veerakek/Mediapalvelut_ja_kayttajakokemus/React/week2-login/",
+    "build": "vite build --base=/~veerakek/Mediapalvelut_ja_kayttajakokemus/React/week3-semantic-ui/",
     "preview": "vite preview"
   },
   "dependencies": {
