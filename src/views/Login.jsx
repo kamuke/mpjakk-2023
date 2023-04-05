@@ -12,7 +12,7 @@ const Login = () => {
   };
 
   return (
-    <Grid style={{marginTop: '4rem'}}>
+    <Grid>
       <Grid.Column style={{maxWidth: 448, margin: 'auto'}}>
         <Header as="h2" textAlign="center" color="blue">
           {formToggle ? 'Login with your username' : 'Please create an account'}

@@ -3,12 +3,15 @@ import {Link, Outlet, useLocation, useNavigate} from 'react-router-dom';
 import {useUser} from '../hooks/ApiHooks';
 import {useEffect, useContext} from 'react';
 import {MediaContext} from '../contexts/MediaContext';
+import {Menu, Container, Button, Icon} from 'semantic-ui-react';
+import {useWindowSize} from '../hooks/WindowHooks';
 
 const Layout = () => {
   const {user, setUser} = useContext(MediaContext);
   const {getUserByToken} = useUser();
   const navigate = useNavigate();
   const location = useLocation();
+  const windowSize = useWindowSize();
 
   const getUserInfo = async () => {
     const token = localStorage.getItem('userToken');
@@ -31,32 +34,79 @@ const Layout = () => {
   }, []);
 
   return (
-    <div>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/home">Home</Link>
-          </li>
+    <>
+      {windowSize.width > 767 ? (
+        <Menu as="nav" style={{paddingLeft: 0}} fixed="top" inverted fluid>
+          <Container>
+            <Menu.Item as={Link} to="/home">
+              <Icon name="home" />
+              Home
+            </Menu.Item>
+            {user ? (
+              <>
+                <Menu.Item as={Link} to="/profile">
+                  <Icon name="user" />
+                  Profile
+                </Menu.Item>
+                <Menu.Item position="right">
+                  <Button as={Link} to="/logout" inverted>
+                    Logout
+                  </Button>
+                </Menu.Item>
+              </>
+            ) : (
+              <Menu.Item position="right">
+                <Button as={Link} to="/" inverted>
+                  Login
+                </Button>
+              </Menu.Item>
+            )}
+          </Container>
+        </Menu>
+      ) : (
+        <Menu
+          as="nav"
+          icon="labeled"
+          fixed="bottom"
+          size="mini"
+          inverted
+          fluid
+          widths={user ? 3 : 2}
+        >
+          <Menu.Item as={Link} to="/home">
+            <Icon name="home" />
+            Home
+          </Menu.Item>
           {user ? (
             <>
-              <li>
-                <Link to="/profile">Profile</Link>
-              </li>
-              <li>
-                <Link to="/logout">Logout</Link>
-              </li>
+              <Menu.Item as={Link} to="/profile">
+                <Icon name="user" />
+                Profile
+              </Menu.Item>
+              <Menu.Item as={Link} to="/logout">
+                <Icon name="log out" />
+                Logout
+              </Menu.Item>
             </>
           ) : (
-            <li>
-              <Link to="/">Login</Link>
-            </li>
+            <Menu.Item as={Link} to="/">
+              <Icon name="sign in" />
+              Login
+            </Menu.Item>
           )}
-        </ul>
-      </nav>
-      <main>
+        </Menu>
+      )}
+      <Container
+        as="main"
+        style={
+          windowSize.width > 767
+            ? {margin: '6rem 0'}
+            : {margin: '1.5rem 0 5rem 0'}
+        }
+      >
         <Outlet />
-      </main>
-    </div>
+      </Container>
+    </>
   );
 };
 

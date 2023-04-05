@@ -1,0 +1,12 @@
+body {
+  height: auto;
+}
+
+.thumbnail img {
+  height: 100% !important;
+  object-fit: cover;
+}
+
+.column > .column {
+  padding: 0 !important;
+}

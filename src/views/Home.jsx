@@ -1,9 +1,10 @@
 import MediaTable from '../components/MediaTable';
+import {Header} from 'semantic-ui-react';
 
 const Home = () => {
   return (
     <>
-      <h1>Home</h1>
+      <Header as="h1">Home</Header>
       <MediaTable />
     </>
   );
