@@ -43,7 +43,7 @@ const Layout = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
+      <CssBaseline /> {/** CSS reset/normalize */}
       <AppBar as="nav" position="sticky">
         <Container maxWidth="xl">
           <Toolbar disableGutters sx={{justifyContent: 'space-between'}}>
@@ -62,6 +62,9 @@ const Layout = () => {
               </Button>
               {user ? (
                 <>
+                  <Button sx={{color: 'white'}} component={Link} to="/upload">
+                    Upload
+                  </Button>
                   <Button sx={{color: 'white'}} component={Link} to="/profile">
                     Profile
                   </Button>
