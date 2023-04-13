@@ -44,7 +44,7 @@ const Layout = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline /> {/** CSS reset/normalize */}
-      <AppBar as="nav" position="sticky">
+      <AppBar position="sticky">
         <Container maxWidth="xl">
           <Toolbar disableGutters sx={{justifyContent: 'space-between'}}>
             <Typography
@@ -56,7 +56,7 @@ const Layout = () => {
             >
               LOGO
             </Typography>
-            <Box sx={{mr: 2}}>
+            <Box as="nav" sx={{mr: 2}}>
               <Button sx={{color: 'white'}} component={Link} to="/home">
                 Home
               </Button>

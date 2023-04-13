@@ -1,6 +1,5 @@
-/* eslint-disable no-unused-vars */
-import {Box, Button, Slider} from '@mui/material';
 // import PropTypes from 'prop-types';
+import {Box, Button, Slider} from '@mui/material';
 import useForm from './../hooks/FormHooks';
 import {useMedia} from '../hooks/ApiHooks';
 import {useLocation, useNavigate} from 'react-router-dom';
@@ -11,6 +10,7 @@ const Update = (props) => {
   const navigate = useNavigate();
   const {state} = useLocation();
   const file = state.file;
+  console.log(file);
   let allData = {
     desc: file.description,
     filters: {
@@ -19,6 +19,7 @@ const Update = (props) => {
       saturation: 100,
     },
   };
+
   const selectedImage = mediaUrl + file.filename;
 
   try {
@@ -27,8 +28,10 @@ const Update = (props) => {
     console.log(error.message);
   }
 
+  console.log('alldata', allData);
+
   const initValues = {
-    tilte: file.title,
+    title: file.title,
     description: allData.desc,
   };
 
@@ -42,7 +45,7 @@ const Update = (props) => {
       };
       const data = {
         title: inputs.title,
-        description: allData,
+        description: JSON.stringify(allData),
       };
       const userToken = localStorage.getItem('userToken');
       // check if file
@@ -58,6 +61,8 @@ const Update = (props) => {
     doUpdate,
     initValues
   );
+
+  console.log('inputs', inputs);
 
   const {inputs: filterInputs, handleInputChange: handleFilterChange} = useForm(
     null,
@@ -124,7 +129,7 @@ const Update = (props) => {
           placeholder="Description"
           value={inputs.description}
         ></textarea>
-        <Button type="submit">Update media</Button>
+        <Button type="submit">Update</Button>
       </form>
     </Box>
   );
