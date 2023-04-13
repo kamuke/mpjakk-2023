@@ -1,9 +1,13 @@
 import {Card, CardMedia, CardContent, Typography} from '@mui/material';
 import {useLocation} from 'react-router-dom';
 import {mediaUrl} from '../utils/variables';
+import {useUser} from '../hooks/ApiHooks';
+import {useEffect, useState} from 'react';
 
 const Single = () => {
   const {state} = useLocation();
+  const [owner, setOwner] = useState({username: ''});
+  const {getUserById} = useUser();
   const file = state.file;
   let allData = {
     desc: file.description,
@@ -20,6 +24,30 @@ const Single = () => {
     console.log(error.message);
   }
 
+  let mediaComponentType = 'img';
+  switch (file.media_type) {
+    case 'video':
+      mediaComponentType = 'video';
+      break;
+    case 'audio':
+      mediaComponentType = 'audio';
+      break;
+  }
+
+  const fetchOwner = async () => {
+    try {
+      const userToken = localStorage.getItem('userToken');
+      const ownerInfo = await getUserById(file.user_id, userToken);
+      setOwner(ownerInfo);
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchOwner();
+  }, []);
+
   return (
     <>
       <Typography component="h1" variant="h3">
@@ -27,7 +55,9 @@ const Single = () => {
       </Typography>
       <Card title={file.title}>
         <CardMedia
-          component={'img'}
+          controls={true}
+          poster={mediaUrl + file.screenshot}
+          component={mediaComponentType}
           src={mediaUrl + file.filename}
           title={file.title}
           style={{
@@ -38,10 +68,14 @@ const Single = () => {
             contrast(${allData.filters.contrast}%)
             saturate(${allData.filters.saturation}%)
             `,
+            backgroundImage:
+              file.media_type === 'audio' &&
+              `url(https://placekitten.com/640/640)`,
           }}
         />
         <CardContent>
           <Typography variant="body1">{allData.desc}</Typography>
+          <Typography variant="body2">By: {owner.username}</Typography>
         </CardContent>
       </Card>
     </>
