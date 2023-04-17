@@ -61,7 +61,7 @@ const Upload = (props) => {
     reader.addEventListener('load', () => {
       setSelectedImage(reader.result);
     });
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(event.target.files[0]);
   };
 
   const {inputs, handleSubmit, handleInputChange} = useForm(
@@ -78,7 +78,7 @@ const Upload = (props) => {
     <Box>
       <img
         src={selectedImage}
-        alt="Preview of the uploaded media"
+        alt="Preview of the media to be uploaded"
         style={{
           width: 600,
           height: 400,

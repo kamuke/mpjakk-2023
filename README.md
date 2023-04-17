@@ -2,4 +2,4 @@
 
 ## Week 4 - Upload
 
-Open [https://users.metropolia.fi/~veerakek/Mediapalvelut_ja_kayttajakokemus/React/week4-upload/](https://users.metropolia.fi/~veerakek/Mediapalvelut_ja_kayttajakokemus/React/week4-upload/) to view it in the browser
+Open [https://users.metropolia.fi/~veerakek/Mediapalvelut_ja_kayttajakokemus/React/week5-player/](https://users.metropolia.fi/~veerakek/Mediapalvelut_ja_kayttajakokemus/React/week5-player/) to view it in the browser

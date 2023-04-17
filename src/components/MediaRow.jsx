@@ -5,17 +5,15 @@ import {
   ImageListItemBar,
 } from '@mui/material';
 import PropTypes from 'prop-types';
-import {Link, useNavigate} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {mediaUrl} from '../utils/variables';
-import {useMedia} from '../hooks/ApiHooks';
 import {useContext} from 'react';
 import {MediaContext} from '../contexts/MediaContext';
 
-const MediaRow = ({file}) => {
-  const {user} = useContext(MediaContext);
-  const navigate = useNavigate();
-  const {deleteMedia} = useMedia();
+const MediaRow = ({file, deleteMedia}) => {
+  const {user, update, setUpdate} = useContext(MediaContext);
 
+  // TODO: move to mediatable
   const doDelete = async () => {
     try {
       const sure = confirm('Are you sure you want to delete this file?');
@@ -23,7 +21,7 @@ const MediaRow = ({file}) => {
         const userToken = localStorage.getItem('userToken');
         const deleteResult = await deleteMedia(file.file_id, userToken);
         console.log(deleteResult);
-        navigate('/myfiles');
+        setUpdate(!update);
       }
     } catch (error) {
       console.log(error);
@@ -77,6 +75,7 @@ const MediaRow = ({file}) => {
 
 MediaRow.propTypes = {
   file: PropTypes.object.isRequired,
+  deleteMedia: PropTypes.func,
 };
 
 export default MediaRow;

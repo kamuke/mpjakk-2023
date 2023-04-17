@@ -15,7 +15,7 @@ const doFetch = async (url, options) => {
 };
 
 const useMedia = (myFilesOnly = false) => {
-  const {user} = useContext(MediaContext);
+  const {user, update} = useContext(MediaContext);
   const [mediaArray, setMediaArray] = useState([]);
 
   const getMedia = async () => {
@@ -43,7 +43,7 @@ const useMedia = (myFilesOnly = false) => {
     } catch (error) {
       console.log(error.message);
     }
-  }, []);
+  }, [update]);
 
   const postMedia = async (data, token) => {
     const options = {
@@ -162,4 +162,34 @@ const useTag = () => {
   return {getTag, postTag};
 };
 
-export {useMedia, useUser, useAuthentication, useTag};
+const useFavourite = () => {
+  const getFavourites = async (id) => {
+    return await doFetch(baseUrl + 'favourites/file/' + id);
+  };
+
+  const postFavourite = async (data, token) => {
+    const fetchOptions = {
+      method: 'POST',
+      headers: {
+        'x-access-token': token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    };
+    return await doFetch(baseUrl + 'favourites', fetchOptions);
+  };
+
+  const deleteFavourite = async (id, token) => {
+    const options = {
+      method: 'DELETE',
+      headers: {
+        'x-access-token': token,
+      },
+    };
+    return await doFetch(baseUrl + 'favourites/file/' + id, options);
+  };
+
+  return {getFavourites, postFavourite, deleteFavourite};
+};
+
+export {useMedia, useUser, useAuthentication, useTag, useFavourite};

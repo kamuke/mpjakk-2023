@@ -1,14 +1,28 @@
-import {Card, CardMedia, CardContent, Typography} from '@mui/material';
+import {
+  Card,
+  CardMedia,
+  CardContent,
+  Typography,
+  ButtonGroup,
+  Button,
+} from '@mui/material';
 import {useLocation} from 'react-router-dom';
 import {mediaUrl} from '../utils/variables';
-import {useUser} from '../hooks/ApiHooks';
-import {useEffect, useState} from 'react';
+import {useFavourite, useUser} from '../hooks/ApiHooks';
+import {useContext, useEffect, useState} from 'react';
+import {MediaContext} from '../contexts/MediaContext';
 
 const Single = () => {
+  const {user} = useContext(MediaContext);
   const {state} = useLocation();
   const [owner, setOwner] = useState({username: ''});
+  const [likes, setLikes] = useState(0);
+  const [userLike, setUserLike] = useState(false);
   const {getUserById} = useUser();
+  const {getFavourites, postFavourite, deleteFavourite} = useFavourite();
+
   const file = state.file;
+
   let allData = {
     desc: file.description,
     filters: {
@@ -44,9 +58,48 @@ const Single = () => {
     }
   };
 
+  const fetchLikes = async () => {
+    try {
+      const likeInfo = await getFavourites(file.file_id);
+      setLikes(likeInfo.length);
+      likeInfo.forEach((like) => {
+        like.user_id === user.user_id && setUserLike(true);
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const doLike = async () => {
+    try {
+      const userToken = localStorage.getItem('userToken');
+      const data = {file_id: file.file_id};
+      const likeInfo = await postFavourite(data, userToken);
+      console.log(likeInfo);
+      setUserLike(true);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const deleteLike = async () => {
+    try {
+      const userToken = localStorage.getItem('userToken');
+      const likeInfo = await deleteFavourite(file.file_id, userToken);
+      console.log(likeInfo);
+      setUserLike(false);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   useEffect(() => {
     fetchOwner();
   }, []);
+
+  useEffect(() => {
+    fetchLikes();
+  }, [userLike]);
 
   return (
     <>
@@ -76,12 +129,19 @@ const Single = () => {
         <CardContent>
           <Typography variant="body1">{allData.desc}</Typography>
           <Typography variant="body2">By: {owner.username}</Typography>
+          <Typography variant="body2">Likes: {likes}</Typography>
+          <ButtonGroup>
+            <Button onClick={doLike} disabled={userLike}>
+              Like
+            </Button>
+            <Button onClick={deleteLike} disabled={!userLike}>
+              Dislike
+            </Button>
+          </ButtonGroup>
         </CardContent>
       </Card>
     </>
   );
 };
-
-// TODO in the next task: add propType for location
 
 export default Single;
